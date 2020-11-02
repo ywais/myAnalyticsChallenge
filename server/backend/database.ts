@@ -834,6 +834,7 @@ export const formatNotificationsForApiResponse = (
 export const createEvent = (event: Event) => {
   db.get(EVENT_TABLE).push(event).write();
 };
+export const getAllEvents = () => db.get(EVENT_TABLE).value();
 
 // dev/test private methods
 /* istanbul ignore next */
