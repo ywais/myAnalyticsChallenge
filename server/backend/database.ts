@@ -830,6 +830,11 @@ export const formatNotificationsForApiResponse = (
     notifications.map((notification) => formatNotificationForApiResponse(notification))
   );
 
+// Event
+export const createEvent = (event: Event) => {
+  db.get(EVENT_TABLE).push(event).write();
+};
+
 // dev/test private methods
 /* istanbul ignore next */
 export const getRandomUser = () => {

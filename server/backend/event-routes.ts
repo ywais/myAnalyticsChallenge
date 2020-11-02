@@ -4,8 +4,7 @@ import express from "express";
 import { Request, Response } from "express";
 
 // some useful database functions in here:
-import {
-} from "./database";
+import { createEvent } from "./database";
 import { Event, weeklyRetentionObject } from "../../client/src/models/event";
 import { ensureAuthenticated, validateMiddleware } from "./helpers";
 
@@ -61,7 +60,13 @@ router.get('/:eventId',(req : Request, res : Response) => {
 });
 
 router.post('/', (req: Request, res: Response) => {
-  res.send('/')
+  const event: Event = req.body;
+  try {
+    createEvent(event);
+    res.send("Event added successfully");
+  } catch (err) {
+    res.send("Failed to add event");
+  }
 });
 
 router.get('/chart/os/:time',(req: Request, res: Response) => {
