@@ -28,11 +28,40 @@ interface Filter {
 
 router.get('/all', (req: Request, res: Response) => {
   const events: Event[] = getAllEvents();
-  res.send(events);
+  res.json(events);
 });
 
 router.get('/all-filtered', (req: Request, res: Response) => {
-  res.send('/all-filtered')
+  const filters: Partial<Filter> = req.query;
+  let events: Event[] = getAllEvents();
+  let more = false;
+  if(filters.type) {
+    events = events.filter((event: Event) => event.name === filters.type);
+  }
+  if(filters.browser) {
+    events = events.filter((event: Event) => event.browser === filters.browser);
+  }
+  if(filters.search) {
+    const regex: RegExp = new RegExp(filters.search, "i");
+    events = events.filter((event) => {
+      return Object.keys(event).map(key => 
+        regex.test(event[key].toString()) ? true : false
+      ).includes(true);
+      // handle search of date or geolocation
+    });
+  }
+  if(filters.sorting) {
+    events.sort((firstEvent: Event, secondEvent: Event) =>
+      filters.sorting === "+date" ?
+        firstEvent.date - secondEvent.date :
+        secondEvent.date - firstEvent.date
+    );
+  }
+  if(filters.offset && filters.offset < events.length) {
+    events = events.slice(0, filters.offset);
+    more = true;
+  }
+  res.json({events, more});
 });
 
 router.get('/by-days/:offset', (req: Request, res: Response) => {

@@ -1,4 +1,5 @@
 export interface Event {
+  [key: string]: string | number | GeoLocation;
   _id: string;
   session_id: string;
   name: eventName;
