@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import { createEvent, getAllEvents } from "./database";
 import { Event, weeklyRetentionObject } from "../../client/src/models/event";
 import { ensureAuthenticated, validateMiddleware } from "./helpers";
+import { OneHour, OneDay, OneWeek } from './timeFrames'
 
 import {
   shortIdValidation,
@@ -65,7 +66,42 @@ router.get('/all-filtered', (req: Request, res: Response) => {
 });
 
 router.get('/by-days/:offset', (req: Request, res: Response) => {
-  res.send('/by-days/:offset')
+  const offset = req.params.offset;
+  const today = new Date (new Date().toDateString()).getTime();
+  const weeklySessions: {date: number, uniqueSessions: string[]}[] = [];
+  for(let i = 6; i >= 0; i--) {
+    weeklySessions.push(
+      {
+        date: (today - parseInt(offset) * OneDay - i * OneDay),
+        uniqueSessions: []
+      });
+  }
+  const addUniqueSessions = (day: number, sessionId: string) => {
+    if(weeklySessions[day].uniqueSessions.length === 0 || !weeklySessions[day].uniqueSessions.includes(sessionId)) {
+      weeklySessions[day].uniqueSessions.push(sessionId);
+    }
+  };
+  let events: Event[] = getAllEvents();
+  events.forEach(event => {
+    if(event.date < weeklySessions[6].date + OneDay) {
+      if(event.date > weeklySessions[6].date) {
+        addUniqueSessions(6, event.session_id);
+      } else if(event.date > weeklySessions[5].date) {
+        addUniqueSessions(5, event.session_id);
+      } else if(event.date > weeklySessions[4].date) {
+        addUniqueSessions(4, event.session_id);
+      } else if(event.date > weeklySessions[3].date) {
+        addUniqueSessions(3, event.session_id);
+      } else if(event.date > weeklySessions[2].date) {
+        addUniqueSessions(2, event.session_id);
+      } else if(event.date > weeklySessions[1].date) {
+        addUniqueSessions(1, event.session_id);
+      } else if(event.date > weeklySessions[0].date) {
+        addUniqueSessions(0, event.session_id);
+      }
+    }
+  });
+  res.json(weeklySessions.map(day => ({date: new Date(day.date).toDateString(), count: day.uniqueSessions.length})));
 });
 
 router.get('/by-hours/:offset', (req: Request, res: Response) => {
