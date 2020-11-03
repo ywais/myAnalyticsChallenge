@@ -9,6 +9,8 @@ import { Event, weeklyRetentionObject } from "../../client/src/models/event";
 import { ensureAuthenticated, validateMiddleware } from "./helpers";
 import { OneHour, OneDay, OneWeek } from './timeFrames'
 
+const today = new Date (new Date().toDateString()).getTime();
+
 import {
   shortIdValidation,
   searchValidation,
@@ -67,7 +69,6 @@ router.get('/all-filtered', (req: Request, res: Response) => {
 
 router.get('/by-days/:offset', (req: Request, res: Response) => {
   const offset = req.params.offset;
-  const today = new Date (new Date().toDateString()).getTime();
   const weeklySessions: {date: number, uniqueSessions: string[]}[] = [];
   for(let i = 6; i >= 0; i--) {
     weeklySessions.push(
@@ -84,20 +85,10 @@ router.get('/by-days/:offset', (req: Request, res: Response) => {
   let events: Event[] = getAllEvents();
   events.forEach(event => {
     if(event.date < weeklySessions[6].date + OneDay) {
-      if(event.date > weeklySessions[6].date) {
-        addUniqueSessions(6, event.session_id);
-      } else if(event.date > weeklySessions[5].date) {
-        addUniqueSessions(5, event.session_id);
-      } else if(event.date > weeklySessions[4].date) {
-        addUniqueSessions(4, event.session_id);
-      } else if(event.date > weeklySessions[3].date) {
-        addUniqueSessions(3, event.session_id);
-      } else if(event.date > weeklySessions[2].date) {
-        addUniqueSessions(2, event.session_id);
-      } else if(event.date > weeklySessions[1].date) {
-        addUniqueSessions(1, event.session_id);
-      } else if(event.date > weeklySessions[0].date) {
-        addUniqueSessions(0, event.session_id);
+      for(let i = 6; i >= 0; i--){
+        if(event.date > weeklySessions[i].date) {
+           return addUniqueSessions(i, event.session_id);
+        }
       }
     }
   });
@@ -105,7 +96,37 @@ router.get('/by-days/:offset', (req: Request, res: Response) => {
 });
 
 router.get('/by-hours/:offset', (req: Request, res: Response) => {
-  res.send('/by-hours/:offset')
+  const offset = req.params.offset;
+  const dailySessions: {hour: number, uniqueSessions: string[]}[] = [];
+  for(let i = 0; i < 24; i++) {
+    dailySessions.push(
+      {
+        hour: (today - parseInt(offset) * OneDay + i * OneHour),
+        uniqueSessions: []
+      });
+  }
+  const addUniqueSessions = (hour: number, sessionId: string) => {
+    if(dailySessions[hour].uniqueSessions.length === 0 || !dailySessions[hour].uniqueSessions.includes(sessionId)) {
+      dailySessions[hour].uniqueSessions.push(sessionId);
+    }
+  };
+  let events: Event[] = getAllEvents();
+  events.forEach(event => {
+    if(event.date < dailySessions[0].hour + OneDay) {
+      for(let i = 23; i >= 0; i--){
+        if(event.date > dailySessions[i].hour) {
+           return addUniqueSessions(i, event.session_id);
+        }
+      }
+    }
+  });
+  res.json(dailySessions.map(day => {
+    const nettoHour: number = new Date(day.hour).getHours();
+    return {
+      hour: `${nettoHour < 10 ? "0"+nettoHour : nettoHour}:00`,
+      count: day.uniqueSessions.length
+    }
+  }));
 });
 
 router.get('/today', (req: Request, res: Response) => {
