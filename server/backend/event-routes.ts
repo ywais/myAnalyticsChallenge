@@ -75,14 +75,15 @@ router.get('/by-days/:offset', (req: Request, res: Response) => {
       {
         date: (today - parseInt(offset) * OneDay - i * OneDay),
         uniqueSessions: []
-      });
+      }
+    );
   }
   const addUniqueSessions = (day: number, sessionId: string) => {
     if(weeklySessions[day].uniqueSessions.length === 0 || !weeklySessions[day].uniqueSessions.includes(sessionId)) {
       weeklySessions[day].uniqueSessions.push(sessionId);
     }
   };
-  let events: Event[] = getAllEvents();
+  const events: Event[] = getAllEvents();
   events.forEach(event => {
     if(event.date < weeklySessions[6].date + OneDay) {
       for(let i = 6; i >= 0; i--){
@@ -103,14 +104,15 @@ router.get('/by-hours/:offset', (req: Request, res: Response) => {
       {
         hour: (today - parseInt(offset) * OneDay + i * OneHour),
         uniqueSessions: []
-      });
+      }
+    );
   }
   const addUniqueSessions = (hour: number, sessionId: string) => {
     if(dailySessions[hour].uniqueSessions.length === 0 || !dailySessions[hour].uniqueSessions.includes(sessionId)) {
       dailySessions[hour].uniqueSessions.push(sessionId);
     }
   };
-  let events: Event[] = getAllEvents();
+  const events: Event[] = getAllEvents();
   events.forEach(event => {
     if(event.date < dailySessions[0].hour + OneDay) {
       for(let i = 23; i >= 0; i--){
@@ -138,9 +140,63 @@ router.get('/week', (req: Request, res: Response) => {
 });
 
 router.get('/retention', (req: Request, res: Response) => {
-  const {dayZero} = req.query
-  res.send('/retention')
+  const events: Event[] = getAllEvents();
+  const dayZero = Date.parse(new Date(parseInt(req.query.dayZero)).toDateString());
+  const weeksFromZero = Math.ceil((today - dayZero) / OneWeek);
+  const weeklySignups: string[][] = [];
+  const weeklyLogins: string[][] = [];
+  const retentionData: weeklyRetentionObject[] = [];
+
+  for(let i = 0; i < weeksFromZero; i++) {
+    retentionData.push(
+    {
+        registrationWeek: i, 
+        newUsers: 0, 
+        weeklyRetention: new Array(weeksFromZero - i).fill(100, 0, 1).fill(0, 1, weeksFromZero - i),
+        start: new Date(dayZero + (OneWeek * i) + (OneHour * 6)).toDateString(),
+        end: new Date(dayZero + (OneWeek * (i + 1)) + (OneHour * 6) - OneDay).toDateString()
+      }
+    );
+    weeklySignups.push([]);
+    weeklyLogins.push([]);
+  }
+
+  const sortEvents = (event: Event, array: string[][]) => {
+    for(let i = 0; i < retentionData.length - 1; i++) {
+      if(event.date < Date.parse(retentionData[i + 1].start)) {
+        event.name === "signup" && retentionData[i].newUsers++;
+        return array[i].push(event.distinct_user_id);
+      }
+    }
+    event.name === "signup" && retentionData[retentionData.length - 1].newUsers++;
+    return array[retentionData.length - 1].push(event.distinct_user_id);
+  }
+
+  events.forEach(event => {
+    if(event.date > dayZero) {
+      if(event.name === "signup") {
+        sortEvents(event, weeklySignups);
+      } else if(event.name === "login") {
+        sortEvents(event, weeklyLogins);
+      }
+    }
+  });
+
+  for(let week = 0; week < weeklySignups.length - 1; week++) {
+    weeklySignups[week].forEach(user => {
+      for(let nextWeek = week + 1; nextWeek < weeklySignups.length; nextWeek++) {
+        if(weeklyLogins[nextWeek].includes(user)) {
+          retentionData[week].weeklyRetention[nextWeek - week]++;
+        }
+      }
+    });
+    for(let nextWeek = 1; nextWeek < retentionData[week].weeklyRetention.length; nextWeek++) {
+      retentionData[week].weeklyRetention[nextWeek] = Math.round(retentionData[week].weeklyRetention[nextWeek] * 100 / weeklySignups[week].length);
+    }
+  }
+  res.json(retentionData)
 });
+
 router.get('/:eventId',(req : Request, res : Response) => {
   res.send('/:eventId')
 });
@@ -159,7 +215,6 @@ router.get('/chart/os/:time',(req: Request, res: Response) => {
   res.send('/chart/os/:time')
 })
 
-  
 router.get('/chart/pageview/:time',(req: Request, res: Response) => {
   res.send('/chart/pageview/:time')
 })
@@ -171,6 +226,5 @@ router.get('/chart/timeonurl/:time',(req: Request, res: Response) => {
 router.get('/chart/geolocation/:time',(req: Request, res: Response) => {
   res.send('/chart/geolocation/:time')
 })
-
 
 export default router;
