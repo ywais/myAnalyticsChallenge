@@ -191,7 +191,9 @@ router.get('/retention', (req: Request, res: Response) => {
       }
     });
     for(let nextWeek = 1; nextWeek < retentionData[week].weeklyRetention.length; nextWeek++) {
-      retentionData[week].weeklyRetention[nextWeek] = Math.round(retentionData[week].weeklyRetention[nextWeek] * 100 / weeklySignups[week].length);
+      retentionData[week].weeklyRetention[nextWeek] = Math.round(
+        retentionData[week].weeklyRetention[nextWeek] * 100 / retentionData[week].newUsers
+      );
     }
   }
   res.json(retentionData)
