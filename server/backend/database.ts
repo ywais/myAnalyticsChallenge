@@ -100,7 +100,7 @@ const db = low(adapter);
 
 export const seedDatabase = () => {
   const testSeed = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "data", "database-seed.json"), "utf-8")
+    fs.readFileSync(path.join(process.cwd(), "data", "database.json"), "utf-8")
   );
 
   // seed database with test data

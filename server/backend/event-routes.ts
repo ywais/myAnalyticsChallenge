@@ -55,9 +55,9 @@ router.get('/all-filtered', (req: Request, res: Response) => {
   }
   if(filters.sorting) {
     events.sort((firstEvent: Event, secondEvent: Event) =>
-      filters.sorting === "+date" ?
-        firstEvent.date - secondEvent.date :
-        secondEvent.date - firstEvent.date
+      filters.sorting === "-date" ?
+        secondEvent.date - firstEvent.date :
+        firstEvent.date - secondEvent.date
     );
   }
   if(filters.offset && filters.offset < events.length) {
