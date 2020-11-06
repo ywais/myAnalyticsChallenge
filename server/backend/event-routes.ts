@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 import { createEvent, getAllEvents } from "./database";
 import { Event, weeklyRetentionObject } from "../../client/src/models/event";
 import { ensureAuthenticated, validateMiddleware } from "./helpers";
-import { OneHour, OneDay, OneWeek } from './timeFrames'
+import { OneHour, OneDay, OneWeek } from "./timeFrames"
 
 const today = new Date (new Date().toDateString()).getTime();
 
@@ -29,12 +29,12 @@ interface Filter {
   offset: number;
 }
 
-router.get('/all', (req: Request, res: Response) => {
+router.get("/all", (req: Request, res: Response) => {
   const events: Event[] = getAllEvents();
   res.json(events);
 });
 
-router.get('/all-filtered', (req: Request, res: Response) => {
+router.get("/all-filtered", (req: Request, res: Response) => {
   const filters: Partial<Filter> = req.query;
   let events: Event[] = getAllEvents();
   let more = false;
@@ -67,7 +67,7 @@ router.get('/all-filtered', (req: Request, res: Response) => {
   res.json({events, more});
 });
 
-router.get('/by-days/:offset', (req: Request, res: Response) => {
+router.get("/by-days/:offset", (req: Request, res: Response) => {
   const offset = req.params.offset;
   const weeklySessions: {date: number, uniqueSessions: string[]}[] = [];
   for(let i = 6; i >= 0; i--) {
@@ -96,7 +96,7 @@ router.get('/by-days/:offset', (req: Request, res: Response) => {
   res.json(weeklySessions.map(day => ({date: new Date(day.date).toDateString(), count: day.uniqueSessions.length})));
 });
 
-router.get('/by-hours/:offset', (req: Request, res: Response) => {
+router.get("/by-hours/:offset", (req: Request, res: Response) => {
   const offset = req.params.offset;
   const dailySessions: {hour: number, uniqueSessions: string[]}[] = [];
   for(let i = 0; i < 24; i++) {
@@ -131,15 +131,15 @@ router.get('/by-hours/:offset', (req: Request, res: Response) => {
   }));
 });
 
-router.get('/today', (req: Request, res: Response) => {
-  res.send('/today')
+router.get("/today", (req: Request, res: Response) => {
+  res.send("/today")
 });
 
-router.get('/week', (req: Request, res: Response) => {
-  res.send('/week')
+router.get("/week", (req: Request, res: Response) => {
+  res.send("/week")
 });
 
-router.get('/retention', (req: Request, res: Response) => {
+router.get("/retention", (req: Request, res: Response) => {
   const events: Event[] = getAllEvents();
   const dayZero = Date.parse(new Date(parseInt(req.query.dayZero)).toDateString());
   const weeksFromZero = Math.ceil((today - dayZero + (OneHour * 6)) / OneWeek);
@@ -199,11 +199,11 @@ router.get('/retention', (req: Request, res: Response) => {
   res.json(retentionData)
 });
 
-router.get('/:eventId',(req : Request, res : Response) => {
-  res.send('/:eventId')
+router.get("/:eventId",(req : Request, res : Response) => {
+  res.send("/:eventId")
 });
 
-router.post('/', (req: Request, res: Response) => {
+router.post("/", (req: Request, res: Response) => {
   const event: Event = req.body;
   try {
     createEvent(event);
@@ -213,20 +213,34 @@ router.post('/', (req: Request, res: Response) => {
   }
 });
 
-router.get('/chart/os/:time',(req: Request, res: Response) => {
-  res.send('/chart/os/:time')
+router.get("/chart/os",(req: Request, res: Response) => {
+  const events: Event[] = getAllEvents();
+  const osUsage: {name: string, usage: number}[] = [];
+  let index;
+  events.forEach(event => {
+    index = osUsage.findIndex(os => os.name === event.os);
+    index >= 0 ? osUsage[index].usage++ : osUsage.push({name: event.os, usage: 1});
+  })
+  res.json(osUsage);
 })
 
-router.get('/chart/pageview/:time',(req: Request, res: Response) => {
-  res.send('/chart/pageview/:time')
+router.get("/chart/pageview/",(req: Request, res: Response) => {
+  const events: Event[] = getAllEvents();
+  const pageViews: {name: string, views: number}[] = [];
+  let index;
+  events.forEach(event => {
+    index = pageViews.findIndex(page => page.name === event.url.substring(21));
+    index >= 0 ? pageViews[index].views++ : pageViews.push({name: event.url.substring(21), views: 1});
+  })
+  res.json(pageViews);
 })
 
-router.get('/chart/timeonurl/:time',(req: Request, res: Response) => {
-  res.send('/chart/timeonurl/:time')
+router.get("/chart/timeonurl/:time",(req: Request, res: Response) => {
+  res.send("/chart/timeonurl/:time")
 })
 
-router.get('/chart/geolocation/:time',(req: Request, res: Response) => {
-  res.send('/chart/geolocation/:time')
+router.get("/chart/geolocation/:time",(req: Request, res: Response) => {
+  res.send("/chart/geolocation/:time")
 })
 
 export default router;

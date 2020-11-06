@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'; 
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"; 
 import axios from "axios";
 
 interface dailyEvents {
@@ -44,7 +44,7 @@ const ChartByDays: React.FC = () => {
             value={selectedDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
-              'aria-label': 'change date',
+              "aria-label": "change date",
             }}
           />
         </MuiPickersUtilsProvider>
@@ -57,7 +57,7 @@ const ChartByDays: React.FC = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="count" stroke="#8884d8" />
+          <Line type="monotone" dataKey="count" stroke="#3f51b5" />
         </LineChart>
       </div>
     </div>
