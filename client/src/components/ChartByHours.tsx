@@ -39,7 +39,7 @@ const ChartByHours: React.FC = () => {
             variant="inline"
             format="dd/MM/yyyy"
             margin="normal"
-            id="by-days-date-picker"
+            id="by-hours-date-picker"
             label="Pick chart's day"
             value={selectedDate}
             onChange={handleDateChange}

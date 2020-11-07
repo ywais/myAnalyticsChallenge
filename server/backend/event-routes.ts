@@ -36,7 +36,7 @@ router.get("/all", (req: Request, res: Response) => {
 
 router.get("/all-filtered", (req: Request, res: Response) => {
   const filters: Partial<Filter> = req.query;
-  let events: Event[] = getAllEvents();
+  let events: Event[] = [...getAllEvents()];
   let more = false;
   if(filters.type) {
     events = events.filter((event: Event) => event.name === filters.type);
@@ -47,9 +47,12 @@ router.get("/all-filtered", (req: Request, res: Response) => {
   if(filters.search) {
     const regex: RegExp = new RegExp(filters.search, "i");
     events = events.filter((event) => {
-      return Object.keys(event).map(key => 
-        regex.test(event[key].toString()) ? true : false
-      ).includes(true);
+      return Object.keys(event).map(key => {
+        if(typeof event[key] === "string") {
+          return regex.test(event[key] as string) ? true : false
+        }
+        return false;
+      }).includes(true);
       // handle search of date or geolocation
     });
   }
