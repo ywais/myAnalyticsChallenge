@@ -152,7 +152,7 @@ router.get("/retention", (req: Request, res: Response) => {
 
   for(let i = 0; i < weeksFromZero; i++) {
     retentionData.push(
-    {
+      {
         registrationWeek: i, 
         newUsers: 0, 
         weeklyRetention: new Array(weeksFromZero - i).fill(100, 0, 1).fill(0, 1, weeksFromZero - i),
@@ -194,9 +194,13 @@ router.get("/retention", (req: Request, res: Response) => {
       }
     });
     for(let nextWeek = 1; nextWeek < retentionData[week].weeklyRetention.length; nextWeek++) {
-      retentionData[week].weeklyRetention[nextWeek] = Math.round(
-        retentionData[week].weeklyRetention[nextWeek] * 100 / retentionData[week].newUsers
-      );
+      if(retentionData[week].newUsers > 0) {
+        retentionData[week].weeklyRetention[nextWeek] = Math.round(
+          retentionData[week].weeklyRetention[nextWeek] * 100 / retentionData[week].newUsers
+        );
+      } else {
+        retentionData[week].weeklyRetention[nextWeek] = 0;
+      }
     }
   }
   res.json(retentionData)

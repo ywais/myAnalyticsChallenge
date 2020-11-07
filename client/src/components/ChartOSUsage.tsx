@@ -20,7 +20,7 @@ const ChartOSUsage: React.FC = () => {
       <div className="chartTileHeader">
         <h1>Usage by OS:</h1>
       </div>
-      <div className="chartTileLineChart">
+      <div className="chartTilePieChart">
         <PieChart width={400} height={400}>
           <Pie dataKey="usage" isAnimationActive={false} data={events} cx={200} cy={200} outerRadius={80} fill="#3f51b5" label />
           <Tooltip />

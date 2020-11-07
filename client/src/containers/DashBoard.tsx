@@ -6,6 +6,7 @@ import ChartByHours from "../components/ChartByHours";
 import ChartOSUsage from "../components/ChartOSUsage";
 import ChartPageViews from "../components/ChartPageViews";
 import ChartEventsLog from "../components/ChartEventsLog";
+import ChartRetention from "../components/ChartRetention";
 
 export interface Props {
   authService: Interpreter<AuthMachineContext, any, AuthMachineEvents, any>;
@@ -16,9 +17,10 @@ const DashBoard: React.FC = () => {
     <>
       <ChartByDays />
       <ChartByHours />
+      <ChartRetention />
+      <ChartEventsLog />
       <ChartOSUsage />
       <ChartPageViews />
-      <ChartEventsLog />
     </>
   );
 };

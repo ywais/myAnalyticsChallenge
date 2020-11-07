@@ -118,82 +118,82 @@ const ChartEventsLog: React.FC = () => {
       <div className="chartTileHeader">
         <h1>Events log:</h1>
         <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="search-input" label="Search" onChange={(event) => setSearch(event.target.value as string)}/>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="sort-input-label">
-            Sort
-          </InputLabel>
-          <Select
-            labelId="sort-input-label"
-            id="sort-input"
-            value={sort}
-            onChange={(event) => setSort(event.target.value as string)}
-            displayEmpty
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value={"+date"}>Ascending</MenuItem>
-            <MenuItem value={"-date"}>Descending</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="type-input-label">
-            Type
-          </InputLabel>
-          <Select
-            labelId="type-input-label"
-            id="type-input"
-            value={type}
-            onChange={(event) => setType(event.target.value as string)}
-            displayEmpty
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value={"login"}>Login</MenuItem>
-            <MenuItem value={"signup"}>Signup</MenuItem>
-            <MenuItem value={"admin"}>Admin</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="browser-input-label">
-            Browser
-          </InputLabel>
-          <Select
-            labelId="browser-input-label"
-            id="browser-input"
-            value={browser}
-            onChange={(event) => setBrowser(event.target.value as string)}
-            displayEmpty
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value={"chrome"}>Chrome</MenuItem>
-            <MenuItem value={"safari"}>Safari</MenuItem>
-            <MenuItem value={"edge"}>Edge</MenuItem>
-            <MenuItem value={"firefox"}>Firefox</MenuItem>
-            <MenuItem value={"ie"}>IE</MenuItem>
-            <MenuItem value={"other"}>Other</MenuItem>
-          </Select>
-        </FormControl>
-      </form>
+          <TextField id="search-input" label="Search" onChange={(event) => setSearch(event.target.value as string)}/>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="sort-input-label">
+              Sort
+            </InputLabel>
+            <Select
+              labelId="sort-input-label"
+              id="sort-input"
+              value={sort}
+              onChange={(event) => setSort(event.target.value as string)}
+              displayEmpty
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value={"+date"}>Ascending</MenuItem>
+              <MenuItem value={"-date"}>Descending</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="type-input-label">
+              Type
+            </InputLabel>
+            <Select
+              labelId="type-input-label"
+              id="type-input"
+              value={type}
+              onChange={(event) => setType(event.target.value as string)}
+              displayEmpty
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value={"login"}>Login</MenuItem>
+              <MenuItem value={"signup"}>Signup</MenuItem>
+              <MenuItem value={"admin"}>Admin</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="browser-input-label">
+              Browser
+            </InputLabel>
+            <Select
+              labelId="browser-input-label"
+              id="browser-input"
+              value={browser}
+              onChange={(event) => setBrowser(event.target.value as string)}
+              displayEmpty
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value={"chrome"}>Chrome</MenuItem>
+              <MenuItem value={"safari"}>Safari</MenuItem>
+              <MenuItem value={"edge"}>Edge</MenuItem>
+              <MenuItem value={"firefox"}>Firefox</MenuItem>
+              <MenuItem value={"ie"}>IE</MenuItem>
+              <MenuItem value={"other"}>Other</MenuItem>
+            </Select>
+          </FormControl>
+        </form>
       </div>
       <div className="chartTileLineChart">
-      <InfiniteScroll
-        dataLength={events.length}
-        next={() => {
-          getData(events.length + 10);
-        }}
-        hasMore={more}
-        height={400}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: 'center' }}>
-            <b>End of list</b>
-          </p>
-        }
-      >
-        {events}
-      </InfiniteScroll>
+        <InfiniteScroll
+          dataLength={events.length}
+          next={() => {
+            getData(events.length + 10);
+          }}
+          hasMore={more}
+          height={400}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>End of list</b>
+            </p>
+          }
+        >
+          {events}
+        </InfiniteScroll>
       </div>
     </div>
   );
