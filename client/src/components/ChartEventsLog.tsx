@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUserPlus, faUserEdit, faUserCog, faUserTag, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Event } from "models";
-import axios from "axios";
 import { Accordion, AccordionDetails, AccordionSummary, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@material-ui/core";
 import { Theme, createStyles, makeStyles } from "@material-ui/core";
+import { AnalyticsChartHeader } from "./Styled";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       "& > *": {
         margin: theme.spacing(1),
-        width: "25ch",
+        // width: "25ch",
       },
     },
     formControl: {
@@ -115,10 +116,15 @@ const ChartEventsLog: React.FC = () => {
 
   return (
     <div className="chartTile">
-      <div className="chartTileHeader">
+      <AnalyticsChartHeader>
         <h1>Events log:</h1>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="search-input" label="Search" onChange={(event) => setSearch(event.target.value as string)}/>
+          <TextField
+            id="search-input"
+            label="Search"
+            style={{maxWidth: "120px"}}
+            onChange={(event) => setSearch(event.target.value as string)}
+          />
           <FormControl className={classes.formControl}>
             <InputLabel shrink id="sort-input-label">
               Sort
@@ -136,6 +142,7 @@ const ChartEventsLog: React.FC = () => {
               <MenuItem value={"-date"}>Descending</MenuItem>
             </Select>
           </FormControl>
+          <br />
           <FormControl className={classes.formControl}>
             <InputLabel shrink id="type-input-label">
               Type
@@ -176,19 +183,19 @@ const ChartEventsLog: React.FC = () => {
             </Select>
           </FormControl>
         </form>
-      </div>
+      </AnalyticsChartHeader>
       <div className="chartTileLineChart">
         <InfiniteScroll
           dataLength={events.length}
-          next={() => {
-            getData(events.length + 10);
-          }}
+          next={() => getData(events.length + 10)}
           hasMore={more}
           height={250}
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
-              <b>End of list</b>
+              <b>
+                {events.length > 0 ? "Last result" : "No results"}
+              </b>
             </p>
           }
         >

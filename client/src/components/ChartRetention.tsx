@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { weeklyRetentionObject } from "models";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
-import { Theme, createStyles, makeStyles, withStyles } from '@material-ui/core';
+import { Theme, createStyles, withStyles } from '@material-ui/core';
 import { KeyboardDatePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { AnalyticsChartHeader } from "./Styled";
 import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 
@@ -26,12 +27,6 @@ const StyledTableFirstCell = withStyles((theme: Theme) =>
   }),
 )(StyledTableCell);
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
-
 const ChartRetention: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.5)));
   const [events, setEvents] = useState<weeklyRetentionObject[]>([]);
@@ -49,11 +44,9 @@ const ChartRetention: React.FC = () => {
     setSelectedDate(date);
   };
 
-  const classes = useStyles();
-
   return (
     <div className="chartTile">
-      <div className="chartTileHeader">
+      <AnalyticsChartHeader>
         <h1>Retention:</h1>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
@@ -70,9 +63,9 @@ const ChartRetention: React.FC = () => {
             }}
           />
         </MuiPickersUtilsProvider>
-      </div>
+      </AnalyticsChartHeader>
       <div className="chartTileLineChart">
-        <Table /*className={classes.table}*/ aria-label="retention table">
+        <Table aria-label="retention table">
           <TableHead>
             <TableRow key="headerRow">
               <StyledTableCell key="header -1" align="left">Dates</StyledTableCell>

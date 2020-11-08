@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from "@react-google-maps/api";
+import { AnalyticsChartHeader } from "./Styled";
 import { Event } from "models";
 import axios from "axios"
 
@@ -32,9 +33,9 @@ const ChartMap: React.FC = () => {
 
   return(
     <div className="chartTile">
-      <div className="chartTileHeader">
+      <AnalyticsChartHeader>
         <h1> Events locations:</h1>
-      </div>
+      </AnalyticsChartHeader>
       <div className="chartTileMap">
         <LoadScript googleMapsApiKey = {apiKey}>
           <GoogleMap

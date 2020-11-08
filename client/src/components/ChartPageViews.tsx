@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts"; 
+import { AnalyticsChartHeader } from "./Styled";
 import { Event } from "../models/event";
 import axios from "axios";
 
@@ -17,9 +18,9 @@ const ChartPageViews: React.FC = () => {
 
   return (
     <div className="chartTile">
-      <div className="chartTileHeader">
+      <AnalyticsChartHeader>
         <h1>Total views in pages:</h1>
-      </div>
+      </AnalyticsChartHeader>
       <div className="chartTilePieChart">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
