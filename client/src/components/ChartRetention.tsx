@@ -18,6 +18,14 @@ const StyledTableCell = withStyles((theme: Theme) =>
   }),
 )(TableCell);
 
+const StyledTableFirstCell = withStyles((theme: Theme) =>
+  createStyles({
+    body: {
+      minWidth: 150,
+    },
+  }),
+)(StyledTableCell);
+
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -64,21 +72,32 @@ const ChartRetention: React.FC = () => {
         </MuiPickersUtilsProvider>
       </div>
       <div className="chartTileLineChart">
-        <Table className={classes.table} aria-label="customized table">
+        <Table /*className={classes.table}*/ aria-label="retention table">
           <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">Dates</StyledTableCell>
+            <TableRow key="headerRow">
+              <StyledTableCell key="header -1" align="left">Dates</StyledTableCell>
               {events[0] && events[0].weeklyRetention.map((week, index) => (
-                <StyledTableCell align="center">Week {index}</StyledTableCell>
+                <StyledTableCell key={"header " + index} align="center">Week {index}</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {events.map((event) => (
               <TableRow key={event.registrationWeek}>
-                <StyledTableCell component="th" scope="row">{event.start} - {event.end}</StyledTableCell>
-                {event.weeklyRetention.map((week) => (
-                  <StyledTableCell align="center">{week}%</StyledTableCell>
+                <StyledTableFirstCell
+                  key={"row " + event.registrationWeek + " cell -1"}
+                  component="th"
+                  scope="row"
+                >
+                  {event.start} - {event.end}
+                </StyledTableFirstCell>
+                {event.weeklyRetention.map((week, index) => (
+                  <StyledTableCell
+                    key={"row " + event.registrationWeek + " cell " + index}
+                    align="center"
+                  >
+                    {week}%
+                  </StyledTableCell>
                 ))}
               </TableRow>
             ))}

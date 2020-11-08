@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"; 
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"; 
 import axios from "axios";
 
 interface dailyEvents {
@@ -50,15 +50,17 @@ const ChartByHours: React.FC = () => {
         </MuiPickersUtilsProvider>
       </div>
       <div className="chartTileLineChart">
-        <LineChart width={730} height={250} data={events}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="hour" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="count" stroke="#00C853" />
-        </LineChart>
+        <ResponsiveContainer width="100%" height={250}>
+          <LineChart data={events}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="hour" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="count" stroke="#00C853" />
+          </LineChart>
+          </ResponsiveContainer>
       </div>
     </div>
   );

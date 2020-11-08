@@ -8,6 +8,7 @@ import ChartPageViews from "../components/ChartPageViews";
 import ChartEventsLog from "../components/ChartEventsLog";
 import ChartRetention from "../components/ChartRetention";
 import ChartMap from "components/ChartMap";
+import ErrorBoundary from "components/ErrorBoundary";
 
 export interface Props {
   authService: Interpreter<AuthMachineContext, any, AuthMachineEvents, any>;
@@ -16,13 +17,27 @@ export interface Props {
 const DashBoard: React.FC = () => {
   return (
     <>
-      <ChartMap />
-      <ChartByDays />
-      <ChartByHours />
-      <ChartRetention />
-      <ChartEventsLog />
-      <ChartOSUsage />
-      <ChartPageViews />
+      <ErrorBoundary name="map chart" >
+        <ChartMap />
+      </ErrorBoundary>
+      <ErrorBoundary name="by days chart" >
+        <ChartByDays />
+      </ErrorBoundary>
+      <ErrorBoundary name="by hours chart" >
+        <ChartByHours />
+      </ErrorBoundary>
+      <ErrorBoundary name="retention chart" >
+        <ChartRetention />
+      </ErrorBoundary>
+      <ErrorBoundary name="map chart" >
+        <ChartEventsLog />
+      </ErrorBoundary>
+      <ErrorBoundary name="os chart" >
+        <ChartOSUsage />
+      </ErrorBoundary>
+      <ErrorBoundary name="page chart" >
+        <ChartPageViews />
+      </ErrorBoundary>
     </>
   );
 };
