@@ -184,7 +184,7 @@ const ChartEventsLog: React.FC = () => {
             getData(events.length + 10);
           }}
           hasMore={more}
-          height={400}
+          height={250}
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>

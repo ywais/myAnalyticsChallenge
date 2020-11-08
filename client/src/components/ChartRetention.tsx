@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 });
 
 const ChartRetention: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7)));
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.5)));
   const [events, setEvents] = useState<weeklyRetentionObject[]>([]);
 
   const getData: Function = async (dayZero: number) => {

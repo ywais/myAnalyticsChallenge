@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PieChart, Pie, Tooltip } from "recharts"; 
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts"; 
 import { Event } from "../models/event";
 import axios from "axios";
 
@@ -21,10 +21,12 @@ const ChartOSUsage: React.FC = () => {
         <h1>Usage by OS:</h1>
       </div>
       <div className="chartTilePieChart">
-        <PieChart width={400} height={400}>
-          <Pie dataKey="usage" isAnimationActive={false} data={events} cx={200} cy={200} outerRadius={80} fill="#3f51b5" label />
-          <Tooltip />
-        </PieChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie dataKey="usage" data={events} cx="50%" cy="50%" outerRadius={80} fill="#3f51b5" label />
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

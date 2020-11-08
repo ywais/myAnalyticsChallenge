@@ -51,8 +51,7 @@ const ChartByHours: React.FC = () => {
       </div>
       <div className="chartTileLineChart">
         <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={events}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <LineChart data={events} margin={{ top: 5, right: 20, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="hour" />
             <YAxis />

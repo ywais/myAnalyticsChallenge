@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PieChart, Pie, Tooltip } from "recharts"; 
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts"; 
 import { Event } from "../models/event";
 import axios from "axios";
 
@@ -21,10 +21,12 @@ const ChartPageViews: React.FC = () => {
         <h1>Total views in pages:</h1>
       </div>
       <div className="chartTilePieChart">
-        <PieChart width={400} height={400}>
-          <Pie dataKey="views" isAnimationActive={false} data={events} cx={200} cy={200} outerRadius={80} fill="#00C853" label />
-          <Tooltip />
-        </PieChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie dataKey="views" data={events} cx="50%" cy="50%" outerRadius={80} fill="#00C853" label />
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
