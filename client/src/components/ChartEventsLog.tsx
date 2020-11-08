@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUserPlus, faUserEdit, faUserCog, faUserTag, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Event } from "models";
 import axios from "axios";
 import { Accordion, AccordionDetails, AccordionSummary, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@material-ui/core";
-import { Theme, createStyles, makeStyles } from '@material-ui/core';
+import { Theme, createStyles, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      '& > *': {
+      "& > *": {
         margin: theme.spacing(1),
-        width: '25ch',
+        width: "25ch",
       },
     },
     formControl: {
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(2),
     },
     heading: {
-      fontSize: theme.typography.pxToRem(20),
+      fontSize: theme.typography.pxToRem(17),
       fontWeight: theme.typography.fontWeightRegular,
       paddingLeft: "10px"
     },
     span: {
-      fontSize: theme.typography.pxToRem(15),
+      fontSize: theme.typography.pxToRem(14),
       fontWeight: theme.typography.fontWeightRegular,
       paddingLeft: "10px"
     },
@@ -187,7 +187,7 @@ const ChartEventsLog: React.FC = () => {
           height={400}
           loader={<h4>Loading...</h4>}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
+            <p style={{ textAlign: "center" }}>
               <b>End of list</b>
             </p>
           }

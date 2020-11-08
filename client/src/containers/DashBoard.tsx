@@ -7,6 +7,7 @@ import ChartOSUsage from "../components/ChartOSUsage";
 import ChartPageViews from "../components/ChartPageViews";
 import ChartEventsLog from "../components/ChartEventsLog";
 import ChartRetention from "../components/ChartRetention";
+import ChartMap from "components/ChartMap";
 
 export interface Props {
   authService: Interpreter<AuthMachineContext, any, AuthMachineEvents, any>;
@@ -15,6 +16,7 @@ export interface Props {
 const DashBoard: React.FC = () => {
   return (
     <>
+      <ChartMap />
       <ChartByDays />
       <ChartByHours />
       <ChartRetention />

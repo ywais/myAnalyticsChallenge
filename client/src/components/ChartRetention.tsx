@@ -76,7 +76,7 @@ const ChartRetention: React.FC = () => {
           <TableBody>
             {events.map((event) => (
               <TableRow key={event.registrationWeek}>
-                <StyledTableCell component="th" scope="row">{event.end} - {event.start}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{event.start} - {event.end}</StyledTableCell>
                 {event.weeklyRetention.map((week) => (
                   <StyledTableCell align="center">{week}%</StyledTableCell>
                 ))}
