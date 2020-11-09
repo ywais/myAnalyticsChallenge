@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
-import { AnalyticsChartHeader } from './Styled';
+import { AnalyticsChartHeader } from '../Styled';
 import { Event } from 'models';
 import axios from 'axios';
 

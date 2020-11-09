@@ -2,13 +2,13 @@ import React from "react";
 import { Interpreter } from "xstate";
 import { AuthMachineContext, AuthMachineEvents } from "../machines/authMachine";
 import { AnalyticsChart, AnalyticsDashbord } from "components/Styled";
-import ChartByDays from "../components/ChartByDays";
-import ChartByHours from "../components/ChartByHours";
-import ChartOSUsage from "../components/ChartOSUsage";
-import ChartPageViews from "../components/ChartPageViews";
-import ChartEventsLog from "../components/ChartEventsLog";
-import ChartRetention from "../components/ChartRetention";
-import ChartMap from "components/ChartMap";
+import ChartByDays from "../components/charts/ChartByDays";
+import ChartByHours from "../components/charts/ChartByHours";
+import ChartOSUsage from "../components/charts/ChartOSUsage";
+import ChartPageViews from "../components/charts/ChartPageViews";
+import ChartEventsLog from "../components/charts/ChartEventsLog";
+import ChartRetention from "../components/charts/ChartRetention";
+import ChartMap from "../components/charts/ChartMap";
 import ErrorBoundary from "components/ErrorBoundary";
 
 export interface Props {

@@ -18601,6 +18601,28 @@
       "balance": 199718,
       "createdAt": "2020-10-31T05:26:10.458Z",
       "modifiedAt": "2020-11-09T00:25:57.035Z"
+    },
+    {
+      "id": "T1pxp2BJz",
+      "uuid": "414e22a4-fb96-4ed4-9d09-e908323a8496",
+      "firstName": "oh",
+      "lastName": "no",
+      "username": "ohno",
+      "password": "$2a$10$9zzL.Ui63b0.7msuSCp5q.QWHPdAlZwXyjJK1rdFsTd6ce2JTbE/m",
+      "balance": 0,
+      "createdAt": "2020-11-09T03:16:54.945Z",
+      "modifiedAt": "2020-11-09T03:16:54.945Z"
+    },
+    {
+      "id": "M4db7bdtL",
+      "uuid": "f42c042e-3e1c-4e83-bf73-113ea8343f8b",
+      "firstName": "oh",
+      "lastName": "no",
+      "username": "ohno",
+      "password": "$2a$10$dQYbZB6xQuq.SiohH/C64OHtFZ6OYYXwoJHfz3hddb2FhqNZKYB3y",
+      "balance": 0,
+      "createdAt": "2020-11-09T08:47:55.113Z",
+      "modifiedAt": "2020-11-09T08:47:55.113Z"
     }
   ],
   "contacts": [
@@ -20355,6 +20377,17 @@
       "isDeleted": false,
       "createdAt": "2020-02-13T03:54:53.976Z",
       "modifiedAt": "2020-11-08T09:11:59.925Z"
+    },
+    {
+      "id": "EMTTj20jM",
+      "uuid": "1f6c674d-34dd-441c-afd3-b9a5a425c07e",
+      "userId": "T1pxp2BJz",
+      "bankName": "12345",
+      "accountNumber": "1234567890",
+      "routingNumber": "12345678w",
+      "isDeleted": false,
+      "createdAt": "2020-11-09T03:17:11.532Z",
+      "modifiedAt": "2020-11-09T03:17:11.532Z"
     }
   ],
   "transactions": [

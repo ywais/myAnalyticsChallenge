@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
-import { AnalyticsChartHeader } from './Styled';
-import { Event } from '../models/event';
+import { AnalyticsChartHeader } from '../Styled';
+import { Event } from '../../models/event';
 import axios from 'axios';
 
 const ChartPageViews: React.FC = () => {

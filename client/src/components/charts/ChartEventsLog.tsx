@@ -8,7 +8,7 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
-import { AnalyticsChartHeader } from './Styled';
+import { AnalyticsChartHeader } from '../Styled';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {

@@ -3,7 +3,7 @@ import { weeklyRetentionObject } from 'models';
 import { Table, TableBody, TableCell, TableHead, TableRow, Theme } from '@material-ui/core';
 import { createStyles, withStyles } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { AnalyticsChartHeader } from './Styled';
+import { AnalyticsChartHeader } from '../Styled';
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
 
@@ -67,7 +67,7 @@ const ChartRetention: React.FC = () => {
               <StyledTableCell key="header -1" align="left">Dates</StyledTableCell>
               {events[0] && events[0].weeklyRetention.map((week, index) => (
                 <StyledTableCell key={`header ${  index}`} align="center">
-                  Week{index}
+                  Week {index}
                 </StyledTableCell>
               ))}
             </TableRow>
