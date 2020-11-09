@@ -22,12 +22,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   render() {
     return (
       <div>
-        {this.state.hasError ?
-          <>{console.log("Failed loading " + this.props.name)}</> :
-          this.props.children
-        }
+        {this.state.hasError
+          ? <>{console.log(`Failed loading ${this.props.name}`)}</>
+          : this.props.children}
       </div>
-    )
+    );
   }
 }
 

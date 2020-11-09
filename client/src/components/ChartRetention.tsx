@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { weeklyRetentionObject } from "models";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
-import { Theme, createStyles, withStyles } from '@material-ui/core';
-import { KeyboardDatePicker,  MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { AnalyticsChartHeader } from "./Styled";
-import DateFnsUtils from "@date-io/date-fns";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { weeklyRetentionObject } from 'models';
+import { Table, TableBody, TableCell, TableHead, TableRow, Theme } from '@material-ui/core';
+import { createStyles, withStyles } from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { AnalyticsChartHeader } from './Styled';
+import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
 
-const StyledTableCell = withStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      backgroundColor: "#F4F4F4",
-      color: "#939393",
-    },
-    body: {
-      fontSize: 14,
-    },
-  }),
-)(TableCell);
+const StyledTableCell = withStyles((theme: Theme) => createStyles({
+  head: {
+    backgroundColor: '#F4F4F4',
+    color: '#939393',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
-const StyledTableFirstCell = withStyles((theme: Theme) =>
-  createStyles({
-    body: {
-      minWidth: 150,
-    },
-  }),
-)(StyledTableCell);
+const StyledTableFirstCell = withStyles((theme: Theme) => createStyles({
+  body: {
+    minWidth: 150,
+  },
+}))(StyledTableCell);
 
 const ChartRetention: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.5)));
@@ -34,11 +30,11 @@ const ChartRetention: React.FC = () => {
   const getData: Function = async (dayZero: number) => {
     const { data } = await axios.get(`http://localhost:3001/events/retention?dayZero=${dayZero}`);
     setEvents(data);
-  }
+  };
 
   useEffect(() => {
     getData(Date.parse(selectedDate!.toDateString()));
-  }, [selectedDate])
+  }, [selectedDate]);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -59,7 +55,7 @@ const ChartRetention: React.FC = () => {
             value={selectedDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
-              "aria-label": "change date",
+              'aria-label': 'change date',
             }}
           />
         </MuiPickersUtilsProvider>
@@ -70,7 +66,9 @@ const ChartRetention: React.FC = () => {
             <TableRow key="headerRow">
               <StyledTableCell key="header -1" align="left">Dates</StyledTableCell>
               {events[0] && events[0].weeklyRetention.map((week, index) => (
-                <StyledTableCell key={"header " + index} align="center">Week {index}</StyledTableCell>
+                <StyledTableCell key={`header ${  index}`} align="center">
+                  Week{index}
+                </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -78,7 +76,7 @@ const ChartRetention: React.FC = () => {
             {events.map((event) => (
               <TableRow key={event.registrationWeek}>
                 <StyledTableFirstCell
-                  key={"row " + event.registrationWeek + " cell -1"}
+                  key={`row ${  event.registrationWeek  } cell -1`}
                   component="th"
                   scope="row"
                 >
@@ -86,7 +84,7 @@ const ChartRetention: React.FC = () => {
                 </StyledTableFirstCell>
                 {event.weeklyRetention.map((week, index) => (
                   <StyledTableCell
-                    key={"row " + event.registrationWeek + " cell " + index}
+                    key={`row ${event.registrationWeek} cell ${index}`}
                     align="center"
                   >
                     {week}%
