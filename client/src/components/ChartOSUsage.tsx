@@ -24,7 +24,7 @@ const ChartOSUsage: React.FC = () => {
       <div className="chartTilePieChart">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Pie dataKey="usage" data={events} cx="50%" cy="50%" outerRadius={80} fill="#3f51b5" label />
+            <Pie dataKey="usage" data={events} cx="50%" cy="50%" outerRadius="60%" fill="#3f51b5" label />
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>

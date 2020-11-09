@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface AnalyticsChartProps {
   backgroundColor: string;
-  gridArea: string;
+  gridArea: string[];
 }
 
 export const AnalyticsDashbord = styled.div`
@@ -10,6 +10,10 @@ export const AnalyticsDashbord = styled.div`
   min-height: 1600px;
   display: grid;
   grid-template: repeat(4, 25%) / repeat(6, 16.67%);
+  @media (max-width: 1160px) {
+    min-height: 2800px;
+    grid-template: repeat(6, 400px) / repeat(2, 50%);
+  }
 `;
 
 export const AnalyticsChart = styled.div`
@@ -17,7 +21,10 @@ export const AnalyticsChart = styled.div`
   background-color: ${(props: AnalyticsChartProps) => props.backgroundColor};
   padding: 0 7px;
   overflow: auto;
-  grid-area: ${(props: AnalyticsChartProps) => props.gridArea};
+  grid-area: ${(props: AnalyticsChartProps) => props.gridArea[0]};
+  @media (max-width: 1160px) {
+    grid-area: ${(props: AnalyticsChartProps) => props.gridArea[1]};
+  }
 `;
 
 export const AnalyticsChartHeader = styled.div`

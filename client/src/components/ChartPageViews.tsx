@@ -24,7 +24,7 @@ const ChartPageViews: React.FC = () => {
       <div className="chartTilePieChart">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Pie dataKey="views" data={events} cx="50%" cy="50%" outerRadius={80} fill="#00C853" label />
+            <Pie dataKey="views" data={events} cx="50%" cy="50%" outerRadius="60%" fill="#00C853" label />
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>

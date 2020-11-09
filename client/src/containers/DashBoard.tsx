@@ -18,39 +18,39 @@ export interface Props {
 const DashBoard: React.FC = () => {
   return (
     <AnalyticsDashbord>
-      <AnalyticsChart backgroundColor="#F4F4F4" gridArea="1 / 1 / 2 / 5">
-        <ErrorBoundary name="map chart" >
-          <ChartMap />
-        </ErrorBoundary>
-      </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#F4F4F4" gridArea="3 / 1 / 4 / 4">
+      <AnalyticsChart backgroundColor="#F4F4F4" gridArea={["3 / 1 / 4 / 4", "4 / 1 / 5 / 3"]}>
         <ErrorBoundary name="by days chart" >
           <ChartByDays />
         </ErrorBoundary>
       </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#E8E8E8" gridArea="3 / 4 / 4 / 7">
+      <AnalyticsChart backgroundColor="#E8E8E8" gridArea={["3 / 4 / 4 / 7", "5 / 1 / 6 / 3"]}>
         <ErrorBoundary name="by hours chart" >
           <ChartByHours />
         </ErrorBoundary>
       </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#fff" gridArea="4 / 1 / 5 / 7">
-        <ErrorBoundary name="retention chart" >
-          <ChartRetention />
-        </ErrorBoundary>
-      </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#E8E8E8" gridArea="2 / 1 / 3 / 5">
+      <AnalyticsChart backgroundColor="#E8E8E8" gridArea={["2 / 1 / 3 / 5", "3 / 1 / 4 / 3"]}>
         <ErrorBoundary name="event log chart" >
           <ChartEventsLog />
         </ErrorBoundary>
       </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#E8E8E8" gridArea="1 / 5 / 2 / 7">
+      <AnalyticsChart backgroundColor="#F4F4F4" gridArea={["1 / 1 / 2 / 5", "1 / 1 / 2 / 3"]}>
+        <ErrorBoundary name="map chart" >
+          <ChartMap />
+        </ErrorBoundary>
+      </AnalyticsChart>
+      <AnalyticsChart backgroundColor="#E8E8E8" gridArea={["1 / 5 / 2 / 7", "2 / 1 / 3 / 2"]}>
         <ErrorBoundary name="os chart" >
           <ChartOSUsage />
         </ErrorBoundary>
       </AnalyticsChart>
-      <AnalyticsChart backgroundColor="#F4F4F4" gridArea="2 / 5 / 3 / 7">
+      <AnalyticsChart backgroundColor="#F4F4F4" gridArea={["2 / 5 / 3 / 7", "2 / 2 / 3 / 3"]}>
         <ErrorBoundary name="page chart" >
           <ChartPageViews />
+        </ErrorBoundary>
+      </AnalyticsChart>
+      <AnalyticsChart backgroundColor="#fff" gridArea={["4 / 1 / 5 / 7", "6 / 1 / 7 / 3"]}>
+        <ErrorBoundary name="retention chart" >
+          <ChartRetention />
         </ErrorBoundary>
       </AnalyticsChart>
     </AnalyticsDashbord>
