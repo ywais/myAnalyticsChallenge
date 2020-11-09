@@ -1,27 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { weeklyRetentionObject } from 'models';
-import { Table, TableBody, TableCell, TableHead, TableRow, Theme } from '@material-ui/core';
-import { createStyles, withStyles } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { AnalyticsChartHeader } from '../Styled';
 import DateFnsUtils from '@date-io/date-fns';
+import styled from 'styled-components';
 import axios from 'axios';
 
-const StyledTableCell = withStyles((theme: Theme) => createStyles({
-  head: {
-    backgroundColor: '#F4F4F4',
-    color: '#939393',
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+interface MyStyledTableCellProps {
+  rowNumber: number;
+  columnNumber: number;
+  content?: number;
+}
 
-const StyledTableFirstCell = withStyles((theme: Theme) => createStyles({
-  body: {
-    minWidth: 150,
-  },
-}))(StyledTableCell);
+export const MyStyledTableCell = styled.td`
+  font-size: 14px;
+  text-align: ${(props: MyStyledTableCellProps) => props.columnNumber < 0 ? 'left' : 'center'};
+  color: ${(props: MyStyledTableCellProps) => props.rowNumber > 0 ? 'black' : '#939393'};
+  background-color: ${
+    (props: MyStyledTableCellProps) => (
+      props.rowNumber === 0 || props.columnNumber === 0
+      ? '#F4F4F4'
+      : props.content && props.content >= 90 
+      ? '#5566c3'
+      : props.content && props.content >= 75 
+      ? '#7b88d1'
+      : props.content && props.content >= 50 
+      ? '#a1aade'
+      : 'white')};
+  padding: 16px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: ${(props: MyStyledTableCellProps) => props.rowNumber > 0 ? 400 : 500};
+  line-height: 1.2;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  letter-spacing: 0.01071em;
+  `;
 
 const ChartRetention: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.5)));
@@ -64,31 +77,36 @@ const ChartRetention: React.FC = () => {
         <Table aria-label="retention table">
           <TableHead>
             <TableRow key="headerRow">
-              <StyledTableCell key="header -1" align="left">Dates</StyledTableCell>
+              <MyStyledTableCell key="header -1" rowNumber={0} columnNumber={-1}>Dates</MyStyledTableCell>
               {events[0] && events[0].weeklyRetention.map((week, index) => (
-                <StyledTableCell key={`header ${  index}`} align="center">
+                <MyStyledTableCell key={`header ${index}`} rowNumber={0} columnNumber={index}>
                   Week {index}
-                </StyledTableCell>
+                </MyStyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {events.map((event) => (
               <TableRow key={event.registrationWeek}>
-                <StyledTableFirstCell
-                  key={`row ${  event.registrationWeek  } cell -1`}
-                  component="th"
-                  scope="row"
+                <MyStyledTableCell 
+                  key={`row ${event.registrationWeek + 1} cell -1`}
+                  rowNumber={event.registrationWeek + 1}
+                  columnNumber={-1}
                 >
-                  {event.start} - {event.end}
-                </StyledTableFirstCell>
+                  <b>
+                    {event.start} - {event.end}
+                  </b> <br />
+                  {event.newUsers} new users
+                </MyStyledTableCell>
                 {event.weeklyRetention.map((week, index) => (
-                  <StyledTableCell
-                    key={`row ${event.registrationWeek} cell ${index}`}
-                    align="center"
+                  <MyStyledTableCell
+                    key={`row ${event.registrationWeek + 1} cell ${index}`}
+                    rowNumber={event.registrationWeek + 1}
+                    columnNumber={index}
+                    content={week}
                   >
                     {week}%
-                  </StyledTableCell>
+                  </MyStyledTableCell>
                 ))}
               </TableRow>
             ))}
