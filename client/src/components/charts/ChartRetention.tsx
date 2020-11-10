@@ -15,7 +15,13 @@ interface MyStyledTableCellProps {
 
 export const MyStyledTableCell = styled.td`
   font-size: 14px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: ${(props: MyStyledTableCellProps) => props.rowNumber > 0 ? 400 : 500};
   text-align: ${(props: MyStyledTableCellProps) => props.columnNumber < 0 ? 'left' : 'center'};
+  padding: 16px;
+  min-width: ${(props: MyStyledTableCellProps) => props.columnNumber < 0 ? '150px' : 0};
+  line-height: 1.2;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
   color: ${(props: MyStyledTableCellProps) => props.rowNumber > 0 ? 'black' : '#939393'};
   background-color: ${
     (props: MyStyledTableCellProps) => (
@@ -27,17 +33,13 @@ export const MyStyledTableCell = styled.td`
       ? '#7b88d1'
       : props.content && props.content >= 50 
       ? '#a1aade'
-      : 'white')};
-  padding: 16px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: ${(props: MyStyledTableCellProps) => props.rowNumber > 0 ? 400 : 500};
-  line-height: 1.2;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
-  letter-spacing: 0.01071em;
-  `;
+      : 'white'
+    )
+  };
+`;
 
 const ChartRetention: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.5)));
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(Date.parse(new Date().toDateString()) - (1000 * 3600 * 24 * 7 * 3.1)));
   const [events, setEvents] = useState<weeklyRetentionObject[]>([]);
 
   const getData: Function = async (dayZero: number) => {
